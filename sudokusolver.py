@@ -1,4 +1,5 @@
-from tkinter import END, Text, Tk
+from ensurepip import bootstrap
+from tkinter import END, Text, Tk, font
 from tkinter import *
 from tkinter import filedialog
 import os
@@ -42,32 +43,75 @@ def sudokuSolver(lst):
 
 
 def main():
+    def close_win():
+       root.destroy()
+       main()
     def showimage():
         fln=filedialog.askopenfilename(initialdir=os.getcwd(), title="Select Image",filetypes=(("JPG File","*.jpg"),("PNG File","*.png"),("All Files","*.")))
+        if fln:
+            lbl1.pack_forget()
+            btn1.after(0, btn1.destroy)
+            btn2.after(0, btn1.destroy)
+            btn=Button(frm, text="Restart",command=close_win)
+            btn.pack(side=tk.LEFT)
+            btn=Button(frm, text="Solve",command=sudokuSolver(lst))
+            btn.pack(side=tk.LEFT,padx=10)
+            
+            
         img=Image.open(fln)
         img.thumbnail((450,450))
         img=ImageTk.PhotoImage(img)
         lbl.configure(image=img)
         lbl.image=img   
     root=Tk()
-    frm=Frame(root)
-    frm.pack(side=BOTTOM,padx=15,pady=15)
+    frm=tk.Frame(root)
+    frm.pack()
+    
     lbl=Label(root)
     lbl.pack()
-    btn=Button(frm, text="Browse Image",command=showimage)
-    btn.pack(side=tk.LEFT)
-    btn=Button(frm, text="Exit",command=lambda: exit())
-    btn.pack(side=tk.LEFT,padx=10)
+    lbl1=Label(frm, text="GUI Sudoku Solver",font= ('Helvetica',25))
+    lbl1.pack(side=TOP,pady=30)
+    lbl1=Label(frm, text="Using Image",font= ('Helvetica',20))
+    lbl1.pack(side=TOP)
+    btn1=Button(frm, text="Browse Image",command=showimage)
+    
+    btn1.pack(side=BOTTOM)
+    btn2=Button(frm, text="Exit",command=lambda: exit())
+    btn2.pack(side=BOTTOM,padx=10)
 
     root.title('Sudoku Solver using Image')
     root.iconbitmap('C:\\Users\\acer\\Desktop\\Thapar\\Subjects\\4th Semester\\Artificial Intelligence UCS411\\Project\\AI Project Deepankar Varma ,Prateek Sharawat\\logo.ico')
     root.geometry("400x400")
     # lst=eval(input('Enter the list (0 for missing values): '))
     lst=[[5,3,0,0,7,0,0,0,0],[6,0,0,1,9,5,0,0,0],[0,9,8,0,0,0,0,6,0],[8,0,0,0,6,0,0,0,3],[4,0,0,8,0,3,0,0,1],[7,0,0,0,2,0,0,0,6],[0,6,0,0,0,0,2,8,0],[0,0,0,4,1,9,0,0,5],[0,0,0,0,8,0,0,7,9]]
-
-    sudokuSolver(lst)
     root.mainloop()
 
 if __name__=='__main__':
     main()
 
+# # Import the required Libraries
+# from tkinter import *
+# from tkinter import ttk, filedialog
+# from tkinter.filedialog import askopenfile
+
+# # Create an instance of tkinter frame
+# win = Tk()
+
+# # Set the geometry of tkinter frame
+# win.geometry("700x350")
+
+# def open_file():
+#    file = filedialog.askopenfile(mode='r', filetypes=[('Python Files', '*.py')])
+#    if file:
+#       content = file.read()
+#       file.close()
+#       print("%d characters in this file" % len(content))
+
+# # Add a Label widget
+# label = Label(win, text="Click the Button to browse the Files", font=('Georgia 13'))
+# label.pack(pady=10)
+
+# # Create a Button
+# ttk.Button(win, text="Browse", command=open_file).pack(pady=20)
+
+# win.mainloop()
