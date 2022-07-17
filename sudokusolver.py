@@ -97,10 +97,7 @@ def main():
 if __name__=='__main__':
     main()
 
-# # Import the required Libraries
-# from tkinter import *
-# from tkinter import ttk, filedialog
-# from tkinter.filedialog import askopenfile
+
 
 # # Create an instance of tkinter frame
 # win = Tk()
